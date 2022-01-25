@@ -3,6 +3,7 @@ The following commands are used in the Introduction to Kubernetes course, organi
 
  
 #Pods
+'''
 kubectl get pods
 cd src
 kubectl create -f 1.1-basic_pod.yaml
@@ -18,7 +19,7 @@ kubectl delete pod mypod
 kubectl create -f 1.4-resources_pod.yaml
 kubectl describe pod mypod | more
 Note: kubectl will accept the singular or plural form of resource kinds. For example kubectl get pods and kubectl get pod are equivalent.
-
+'''
  
 
 #Services
