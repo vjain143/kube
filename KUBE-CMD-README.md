@@ -3,7 +3,7 @@ The following commands are used in the Introduction to Kubernetes course, organi
 
  
 #Pods
-'''
+```
 kubectl get pods
 cd src
 kubectl create -f 1.1-basic_pod.yaml
@@ -19,27 +19,30 @@ kubectl delete pod mypod
 kubectl create -f 1.4-resources_pod.yaml
 kubectl describe pod mypod | more
 Note: kubectl will accept the singular or plural form of resource kinds. For example kubectl get pods and kubectl get pod are equivalent.
-'''
+```
  
 
 #Services
+```
 kubectl create -f 2.1-web_service.yaml
 kubectl get services
 kubectl describe service webserver
 kubectl describe nodes | grep -i addresses -A 1
 curl 10.0.0.100:3#### (replace #### with the actual port digits)
- 
+```
 
 #Multi-Container Pods
+```
 kubectl create -f 3.1-namespace.yaml
 kubectl create -f 3.2-multi_container.yaml -n microservice
 kubectl get -n microservice pod app
 kubectl describe -n microservice pod app
 kubectl logs -n microservice app counter --tail 10
 kubectl logs -n microservice app poller -f
- 
+```
 
 #Service Discovery
+```
 kubectl create -f 4.1-namespace.yaml
 kubectl create -f 4.2-data_tier.yaml -n service-discovery
 kubectl get pod -n service-discovery
@@ -48,9 +51,10 @@ kubectl create -f 4.3-app_tier.yaml -n service-discovery
 kubectl create -f 4.4-support_tier.yaml -n service-discovery
 kubectl get pods -n service-discovery
 kubectl logs -n service-discovery support-tier poller -f
- 
+``` 
 
 #Deployments
+```
 kubectl create -f 5.1-namespace.yaml
 kubectl create -n deployments -f 5.2-data_tier.yaml -f 5.3-app_tier.yaml -f 5.4-support_tier.yaml
 kubectl get -n deployments deployments
@@ -62,9 +66,10 @@ watch -n 1 kubectl -n deployments get pods
 kubectl scale -n deployments deployment app-tier --replicas=5
 kubectl -n deployments get pods
 kubectl describe -n deployments service app-tier
- 
+``` 
 
 #Autoscaling
+```
 # kubectl create -f metrics-server/ # metrics-server is pre-installed on the playground so you don't need to run this command
 watch kubectl top pods -n deployments
 kubectl create -f 6.1-app_tier_cpu_request.yaml -n deployments
@@ -78,9 +83,10 @@ kubectl describe -n deployments hpa
 kubectl get -n deployments hpa
 kubectl edit -n deployments hpa
 watch -n 1 kubectl get -n deployments deployments app-tier
- 
+``` 
 
 #Rolling Updates and Rollbacks
+```
 kubectl delete -n deployments hpa app-tier
 kubectl edit -n deployments deployment app-tier
 watch -n 1 kubectl get -n deployments deployments app-tier 
@@ -94,9 +100,10 @@ kubectl get deployments -n deployments app-tier (left terminal)
 kubectl rollout -n deployments resume deployment app-tier (left terminal)
 kubectl rollout -n deployments undo deployment app-tier
 kubectl scale -n deployments deployment app-tier --replicas=1
- 
+``` 
 
 #Probes
+```
 kubectl create -f 7.1-namespace.yaml
 kubectl create -f 7.2-data_tier.yaml -n probes
 kubectl get deployments -n probes -w
@@ -104,15 +111,17 @@ kubectl create -f 7.3-app_tier.yaml -n probes
 kubectl get -n probes deployments app-tier -w
 kubectl get -n probes pods
 kubectl logs -n probes app-tier-... | cut -d' ' -f5,8-11 (You can use tab completion to display the possible values to replace ... with)
- 
+``` 
 
 #Init Containers
+```
 kubectl apply -f 8.1-app_tier.yaml -n probes
 kubectl describe pod -n probes app-tier... (You can use tab completion to display the possible values to replace ... with)
 kubectl logs -n probes app-tier-... await-redis (You can use tab completion to display the possible values to replace ... with)
- 
+``` 
 
 #Volumes
+```
 kubectl -n deployments logs support-tier-... poller --tail 1 (You can use tab completion to display the possible values to replace ... with)
 kubectl exec -n deployments data-tier-... -it -- /bin/bash (You can use tab completion to display the possible values to replace ... with)
 kill 1
@@ -132,9 +141,10 @@ kubectl delete -n volumes deployments data-tier
 kubectl get -n volumes pods
 kubectl create -n volumes -f 9.2-pv_data_tier.yaml
 kubectl logs -n volumes support-tier-... poller --tail 1 (You can use tab completion to display the possible values to replace ... with)
- 
+``` 
 
 #ConfigMaps and Secrets
+```
 kubectl create -f 10.1-namespace.yaml
 kubectl create -n config -f 10.2-data_tier_config.yaml -f 10.3-data_tier.yaml
 kubectl exec -n config data-tier-... -it -- /bin/bash (You can use tab completion to display the possible values to replace ... with)
@@ -150,3 +160,4 @@ kubectl describe -n config secret app-tier-secret
 kubectl edit -n config secrets app-tier-secret
 kubectl create -f 10.5-app_tier.yaml -n config
 kubectl exec -n config app-tier-... -- env (You can use tab completion to display the possible values to replace ... with)
+```
